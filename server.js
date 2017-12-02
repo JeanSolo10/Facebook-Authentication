@@ -18,7 +18,8 @@ var flash = require('connect-flash');
 
 //Path for database
 var configDB = require('./config/database.js');
-mongoose.createConnection(configDB.url);
+mongoose.connect(configDB.url, { useMongoClient: true });
+mongoose.Promise = global.Promise;
 require('./config/passport')(passport);
 
 
@@ -41,22 +42,11 @@ app.use(passport.session());
 app.use(flash());
 
 
-
-
-
 //We can use JADE as well. EJS is another template we are using for now
 app.set('view engine', 'ejs');
 
-/*app.use('/', function(req, res){
-    // "send" - express function
-    res.send('Our first Express Program!');
-    console.log(req.cookies);
-    console.log('=============');
-    console.log(req.session);
-});*/
 
 require('./app/routes.js')(app, passport);
-
 
 app.listen(port);
 console.log('Server running on port: ' + port);

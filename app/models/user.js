@@ -1,11 +1,18 @@
-
 var mongoose = require('mongoose');
+mongoose.Promise = global.Promise;
 
-var userSchema = mongoose.Schema({
+var UserSchema = new mongoose.Schema({
     local: {
         username: String,
         password: String
+    },
+    facebook: {
+        id: String,
+        token: String,
+        email: String,
+        name: String
     }
 });
 
-module.exports = mongoose.model('User', userSchema);
+
+module.exports = mongoose.model('User', UserSchema);
